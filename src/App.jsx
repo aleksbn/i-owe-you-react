@@ -6,6 +6,10 @@ import AppLayout from "./ui/AppLayout";
 import PageNotFound from "./pages/PageNotFound";
 import Login from "./pages/Login";
 import Statistics from "./pages/Statistics";
+import Account from "./pages/Account";
+import PersonsList from "./pages/PersonsList";
+import Person from "./pages/Person";
+import Owings from "./pages/Owings";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -23,8 +27,12 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route element={<AppLayout />}>
-						<Route index element={<Navigate replace to="statistics" />} />
+						<Route index element={<Navigate replace to="owings" />} />
 						<Route path="statistics" element={<Statistics />} />
+						<Route path="account" element={<Account />} />
+						<Route path="people" element={<PersonsList />} />
+						<Route path="people/:personId" element={<Person />} />
+						<Route path="owings" element={<Owings />} />
 					</Route>
 					<Route path="login" element={<Login />} />
 					<Route path="*" element={<PageNotFound />} />
