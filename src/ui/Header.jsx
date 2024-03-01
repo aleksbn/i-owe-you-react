@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import UserAvatar from "../features/authentication/UserAvatar";
+import HeaderMenu from "./HeaderMenu";
 
 const StyledHeader = styled.header`
 	background-color: var(--color-grey-0);
@@ -6,12 +8,17 @@ const StyledHeader = styled.header`
 	border-bottom: 1px solid var(--color-grey-100);
 	display: flex;
 	gap: 2.4rem;
-	align-items: center;
+	align-items: flex-end;
 	justify-content: flex-end;
 `;
 
 function Header() {
-	return <StyledHeader>Header</StyledHeader>;
+	return (
+		<StyledHeader>
+			<HeaderMenu />
+			<UserAvatar />
+		</StyledHeader>
+	);
 }
 
 export default Header;
