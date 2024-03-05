@@ -35,6 +35,14 @@ const StyledRow = styled(CommonRow)`
 	}
 `;
 
+const StyledRowGreen = styled(StyledRow)`
+	background-color: var(--color-green-300);
+`;
+
+const StyledRowRed = styled(StyledRow)`
+	background-color: var(--color-red-300);
+`;
+
 const StyledBody = styled.section`
 	margin: 0%.4rem 0;
 `;
@@ -76,8 +84,23 @@ function Header({ children }) {
 	);
 }
 
-function Row({ children }) {
+function Row({ children, color = "" }) {
 	const { columns } = useContext(TableContext);
+
+	if (color === "green")
+		return (
+			<StyledRowGreen role="row" columns={columns}>
+				{children}
+			</StyledRowGreen>
+		);
+
+	if (color === "red")
+		return (
+			<StyledRowRed role="row" columns={columns}>
+				{children}
+			</StyledRowRed>
+		);
+
 	return (
 		<StyledRow role="row" columns={columns}>
 			{children}
