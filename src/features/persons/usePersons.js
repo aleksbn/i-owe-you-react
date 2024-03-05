@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getPersons } from "../../services/apiPersons";
 
 export function usePersons() {
-	// const queryClient = useQueryClient();
 	const {
 		isLoading,
 		data: { data: persons, count } = {},

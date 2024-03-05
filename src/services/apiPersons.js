@@ -9,5 +9,5 @@ export async function getPersons() {
 		throw new Error("People could not be loaded");
 	}
 
-	return { data, count };
+	return { data, error, count };
 }
