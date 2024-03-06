@@ -3,10 +3,21 @@ import styled from "styled-components";
 import Table from "../../ui/Table";
 import { format } from "date-fns";
 import { formatCurrency } from "../../utilities/helpers";
+import Modal from "../../ui/Modal";
+import Menus from "../../ui/Menus";
+import { HiEye, HiMiniBanknotes, HiTrash } from "react-icons/hi2";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import { useNavigate } from "react-router-dom";
+import ConfirmRepayment from "../../ui/ConfirmRepayment";
 
 const StyledNickname = styled.div`
 	font-family: "Sono";
 	font-size: 2rem;
+	font-weight: 500;
+`;
+
+const StyledDate = styled.div`
+	font-family: "Sono";
 	font-weight: 500;
 `;
 
@@ -26,12 +37,18 @@ const Img = styled.img`
 
 const StyledStatus = styled(StyledAmount)`
 	font-weight: 700;
+	text-decoration: underline;
 `;
 
 const StyledDirection = styled(StyledAmount)``;
 
+// details
+// repay
+// delete
+
 function OwingsRow({
 	owing: {
+		id: owingId,
 		movementDate,
 		amount,
 		status,
@@ -39,6 +56,9 @@ function OwingsRow({
 		payments,
 	},
 }) {
+	const navigate = useNavigate();
+	const remainingAmount =
+		Math.abs(amount) - payments.reduce((acc, cur) => acc + cur.amount, 0);
 	const statusToTagColor = {
 		active: amount < 0 ? "green" : "red",
 		repayed: "grey",
@@ -46,20 +66,51 @@ function OwingsRow({
 
 	return (
 		<Table.Row color={statusToTagColor[status]}>
-			<div>{format(new Date(movementDate), "MMM dd yyyy")}</div>
+			<StyledDate>{format(new Date(movementDate), "MMM dd yyyy")}</StyledDate>
 			<StyledAmount>{formatCurrency(Math.abs(amount))}</StyledAmount>
 			<StyledNickname>{nickname}</StyledNickname>
 			<Img src={image ? image : "default-user.jpg"} />
 			<StyledStatus type={statusToTagColor[status]}>
 				{status === "repayed"
 					? "Repayed"
-					: `${formatCurrency(
-							Math.abs(amount) -
-								payments.reduce((acc, cur) => acc + cur.amount, 0)
-							// eslint-disable-next-line no-mixed-spaces-and-tabs
-					  )} to full repayment`}
+					: `${formatCurrency(remainingAmount)} to full repayment`}
 			</StyledStatus>
 			<StyledDirection>{amount > 0 ? "You" : nickname}</StyledDirection>
+			<Modal>
+				<Menus.Menu>
+					<Menus.Toggle id={owingId} />
+					<Menus.List id={owingId}>
+						<Menus.Button
+							icon={<HiEye />}
+							onClick={() => navigate(`/owings/${owingId}`)}
+						>
+							See details
+						</Menus.Button>
+						{remainingAmount > 0 && (
+							<Modal.Open opens="repay">
+								<Menus.Button icon={<HiMiniBanknotes />}>Repay</Menus.Button>
+							</Modal.Open>
+						)}
+						<Modal.Open opens="delete">
+							<Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+						</Modal.Open>
+					</Menus.List>
+				</Menus.Menu>
+				<Modal.Window name="delete">
+					<ConfirmDelete
+						resourceName="owing"
+						disabled={false}
+						onConfirm={() => alert("You want to delete me?! Well, not yet!")}
+					/>
+				</Modal.Window>
+				<Modal.Window name="repay">
+					<ConfirmRepayment
+						maxAmount={remainingAmount}
+						onConfirm={() => alert("You'll pay eventually, don't worry")}
+						disabled={false}
+					/>
+				</Modal.Window>
+			</Modal>
 		</Table.Row>
 	);
 }

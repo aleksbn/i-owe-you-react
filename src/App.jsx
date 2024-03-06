@@ -9,7 +9,8 @@ import Statistics from "./pages/Statistics";
 import Account from "./pages/Account";
 import PersonsList from "./pages/PersonsList";
 import Person from "./pages/Person";
-import Owings from "./pages/Owings";
+import OwingsList from "./pages/OwingsList";
+import Owing from "./pages/Owing";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -32,7 +33,8 @@ function App() {
 						<Route path="account" element={<Account />} />
 						<Route path="people" element={<PersonsList />} />
 						<Route path="people/:personId" element={<Person />} />
-						<Route path="owings" element={<Owings />} />
+						<Route path="owings" element={<OwingsList />} />
+						<Route path="owings/:owingId" element={<Owing />} />
 					</Route>
 					<Route path="login" element={<Login />} />
 					<Route path="*" element={<PageNotFound />} />

@@ -1,6 +1,11 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
+import { HiEye, HiTrash } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 const FullName = styled.div`
 	font-size: 2.4rem;
@@ -32,8 +37,10 @@ const Img = styled.img`
 `;
 
 function PersonRow({
-	person: { firstName, lastName, nickname, image, phoneNumber },
+	person: { id: personId, firstName, lastName, nickname, image, phoneNumber },
 }) {
+	const navigate = useNavigate();
+
 	return (
 		<Table.Row>
 			<Img src={image ? image : "default-user.jpg"} />
@@ -42,6 +49,30 @@ function PersonRow({
 			</FullName>
 			<Nickname>{nickname}</Nickname>
 			<PhoneNumber>{phoneNumber}</PhoneNumber>
+			<Modal>
+				<Menus.Menu>
+					<Menus.Toggle id={personId} />
+					<Menus.List id={personId}>
+						<Menus.Button
+							icon={<HiEye />}
+							onClick={() => navigate(`/people/${personId}`)}
+						>
+							See details
+						</Menus.Button>
+						<Modal.Open opens="delete">
+							<Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+						</Modal.Open>
+					</Menus.List>
+				</Menus.Menu>
+				<Modal.Window name="delete">
+					<ConfirmDelete
+						resourceName="person"
+						disabled={false}
+						onConfirm={() => alert("You want to delete me?! Well, not yet!")}
+						extraMessage="If you delete this person, you're also deleting all owings of that person."
+					/>
+				</Modal.Window>
+			</Modal>
 		</Table.Row>
 	);
 }
