@@ -1,4 +1,5 @@
 import Empty from "../../ui/Empty";
+import Menus from "../../ui/Menus";
 import Spinner from "../../ui/Spinner";
 import Table from "../../ui/Table";
 import PersonRow from "./PersonRow";
@@ -12,19 +13,21 @@ function PersonsTable() {
 	if (!count) return <Empty resourceName="persons" />;
 
 	return (
-		<Table columns="1.2fr 3fr 1.4fr 1.4fr 3.2rem">
-			<Table.Header>
-				<div>Image</div>
-				<div>Full name</div>
-				<div>Nickname</div>
-				<div>Phone number</div>
-				<div></div>
-			</Table.Header>
-			<Table.Body
-				data={persons}
-				render={(person) => <PersonRow key={person.id} person={person} />}
-			></Table.Body>
-		</Table>
+		<Menus>
+			<Table columns="1.2fr 3fr 1.4fr 1.4fr 3.2rem">
+				<Table.Header>
+					<div>Image</div>
+					<div>Full name</div>
+					<div>Nickname</div>
+					<div>Phone number</div>
+					<div></div>
+				</Table.Header>
+				<Table.Body
+					data={persons}
+					render={(person) => <PersonRow key={person.id} person={person} />}
+				></Table.Body>
+			</Table>
+		</Menus>
 	);
 }
 

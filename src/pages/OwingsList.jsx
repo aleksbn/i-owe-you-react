@@ -2,7 +2,7 @@ import OwingsTable from "../features/owings/OwingsTable";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
 
-function Owings() {
+function OwingsList() {
 	return (
 		<>
 			<Row type="horizontal">
@@ -14,4 +14,4 @@ function Owings() {
 	);
 }
 
-export default Owings;
+export default OwingsList;
