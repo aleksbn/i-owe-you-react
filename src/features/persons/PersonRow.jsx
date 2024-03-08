@@ -6,6 +6,7 @@ import { HiEye, HiTrash } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
+import { useDeletePerson } from "./useDeletePerson";
 
 const FullName = styled.div`
 	font-size: 2.4rem;
@@ -40,6 +41,7 @@ function PersonRow({
 	person: { id: personId, firstName, lastName, nickname, image, phoneNumber },
 }) {
 	const navigate = useNavigate();
+	const { isDeleting, deletePerson } = useDeletePerson();
 
 	return (
 		<Table.Row>
@@ -57,7 +59,7 @@ function PersonRow({
 							icon={<HiEye />}
 							onClick={() => navigate(`/people/${personId}`)}
 						>
-							See details
+							Update details
 						</Menus.Button>
 						<Modal.Open opens="delete">
 							<Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
@@ -67,8 +69,8 @@ function PersonRow({
 				<Modal.Window name="delete">
 					<ConfirmDelete
 						resourceName="person"
-						disabled={false}
-						onConfirm={() => alert("You want to delete me?! Well, not yet!")}
+						disabled={isDeleting}
+						onConfirm={() => deletePerson(personId)}
 						extraMessage="If you delete this person, you're also deleting all owings of that person."
 					/>
 				</Modal.Window>
