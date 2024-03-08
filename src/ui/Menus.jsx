@@ -36,7 +36,7 @@ const StyledList = styled.button`
 	z-index: 1;
 
 	background-color: var(--color-grey-0);
-	box-shadow: var(--shadow-md);
+	box-shadow: var(--shadow-lg);
 	border-radius: var(--border-radius-md);
 
 	right: ${(props) => props.position.x}px;
@@ -58,7 +58,7 @@ const StyledButton = styled.button`
 	gap: 1.6rem;
 
 	&:hover {
-		background-color: var(--color-grey-50);
+		background-color: var(--color-grey-100);
 	}
 
 	& svg {
