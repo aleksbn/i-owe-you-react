@@ -33,7 +33,6 @@ function App() {
 						<Route path="statistics" element={<Statistics />} />
 						<Route path="account" element={<Account />} />
 						<Route path="people" element={<PersonsList />} />
-						<Route path="people/new" element={<Person />} />
 						<Route path="people/:personId" element={<Person />} />
 						<Route path="owings" element={<OwingsList />} />
 						<Route path="owings/:owingId" element={<Owing />} />

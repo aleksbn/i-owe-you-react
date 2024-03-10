@@ -16,11 +16,12 @@ function Person() {
 		navigate("/people");
 	}
 
-	if (!personId) return <PersonDetails onClose={handleClose} />;
-
 	if (isLoading) return <Spinner />;
 
-	if (!isLoading && personId !== undefined && error)
+	if (!isLoading && personId === "new")
+		return <PersonDetails onClose={handleClose} />;
+
+	if (!isLoading && personId !== "new" && error)
 		return <Empty resourceName="person under that ID" />;
 
 	return <PersonDetails onClose={handleClose} personToUpdate={person} />;

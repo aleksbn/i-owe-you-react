@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
-import { HiEye, HiTrash } from "react-icons/hi2";
+import { HiPencil, HiTrash } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
@@ -56,7 +56,7 @@ function PersonRow({
 					<Menus.Toggle id={personId} />
 					<Menus.List id={personId}>
 						<Menus.Button
-							icon={<HiEye />}
+							icon={<HiPencil />}
 							onClick={() => navigate(`/people/${personId}`)}
 						>
 							Update details
@@ -71,7 +71,7 @@ function PersonRow({
 						resourceName="person"
 						disabled={isDeleting}
 						onConfirm={() => deletePerson(personId)}
-						extraMessage="If you delete this person, you're also deleting all owings of that person."
+						extraMessage="If you delete this person, you're also deleting all owings connected to this person."
 					/>
 				</Modal.Window>
 			</Modal>
