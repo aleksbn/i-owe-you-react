@@ -9,6 +9,7 @@ import { HiEye, HiMiniBanknotes, HiTrash } from "react-icons/hi2";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useNavigate } from "react-router-dom";
 import ConfirmRepayment from "../../ui/ConfirmRepayment";
+import { useDeleteOwing } from "./useDeleteOwing";
 
 const StyledNickname = styled.div`
 	font-family: "Sono";
@@ -57,6 +58,7 @@ function OwingsRow({
 	},
 }) {
 	const navigate = useNavigate();
+	const { isDeleting, deleteOwing } = useDeleteOwing();
 	const remainingAmount =
 		Math.abs(amount) - payments.reduce((acc, cur) => acc + cur.amount, 0);
 	const statusToTagColor = {
@@ -99,15 +101,16 @@ function OwingsRow({
 				<Modal.Window name="delete">
 					<ConfirmDelete
 						resourceName="owing"
-						disabled={false}
-						onConfirm={() => alert("You want to delete me?! Well, not yet!")}
+						disabled={isDeleting}
+						onConfirm={() => deleteOwing(owingId)}
+						extraMessage="If you delete this owing, you'll also delete all payments connected to it."
 					/>
 				</Modal.Window>
 				<Modal.Window name="repay">
 					<ConfirmRepayment
 						maxAmount={remainingAmount}
 						onConfirm={() => alert("You'll pay eventually, don't worry")}
-						disabled={false}
+						disabled={isDeleting}
 					/>
 				</Modal.Window>
 			</Modal>

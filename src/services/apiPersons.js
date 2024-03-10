@@ -13,6 +13,7 @@ export async function getPersons() {
 }
 
 export async function getPerson(id) {
+	if (id === 0) return { data: null, error: null };
 	const { data, error } = await supabase
 		.from("persons")
 		.select("*")
