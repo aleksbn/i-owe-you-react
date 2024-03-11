@@ -30,14 +30,27 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 	const [owedByMe, setOwedByMe] = useState(owing.owedByMe || false);
 	const navigate = useNavigate();
 	const isRepayed = isEditSession
-		? owing.status === "active"
-			? false
-			: true
+		? Math.abs(owing.amount) ===
+		  owing.payments.reduce((acc, cur) => acc + cur.amount, 0)
+			? true
+			: false
 		: false;
 
 	const minValueForAmount = !isEditSession
 		? 1
 		: owing.payments.reduce((acc, cur) => acc + cur.amount, 0) + 1;
+
+	const payments = isEditSession ? [...owing.payments] : [];
+
+	const minDate = !isEditSession
+		? new Date()
+		: payments.length > 0
+		? payments.sort(
+				(a, b) =>
+					new Date(a.dateOfPayment).getTime() -
+					new Date(b.dateOfPayment).getTime()
+		  )[0].dateOfPayment
+		: new Date();
 
 	function onSubmit(data) {
 		if (!isEditSession) {
@@ -75,7 +88,9 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 		<>
 			<Heading as="h1">
 				{isEditSession
-					? `${owing.persons.firstName} ${owing.persons.lastName}`
+					? `${owing.persons.firstName} ${owing.persons.lastName} ${
+							isRepayed ? ` - already repayed` : ``
+					  }`
 					: "Add a new owing"}
 			</Heading>
 			<Form
@@ -112,7 +127,7 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 				<FormRow label="Date" error={errors?.movementDate?.message}>
 					<Input
 						type="date"
-						max={format(new Date(), "yyyy-MM-dd")}
+						max={format(new Date(minDate), "yyyy-MM-dd")}
 						defaultValue={format(new Date(), "yyyy-MM-dd")}
 						disabled={isWorking || isRepayed}
 						id="movementDate"

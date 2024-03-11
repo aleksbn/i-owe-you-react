@@ -1,7 +1,10 @@
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function getPersons() {
-	let query = supabase.from("persons").select("*", { count: "exact" });
+	let query = supabase
+		.from("persons")
+		.select("*", { count: "exact" })
+		.order("lastName", "firstName");
 
 	const { data, error, count } = await query;
 

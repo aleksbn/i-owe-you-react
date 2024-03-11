@@ -43,6 +43,10 @@ const StyledRowRed = styled(StyledRow)`
 	background-color: var(--color-red-300);
 `;
 
+const StyledRowGrey = styled(StyledRow)`
+	background-color: var(--color-grey-300);
+`;
+
 const StyledBody = styled.section`
 	margin: 0%.4rem 0;
 `;
@@ -99,6 +103,13 @@ function Row({ children, color = "" }) {
 			<StyledRowRed role="row" columns={columns}>
 				{children}
 			</StyledRowRed>
+		);
+
+	if (color === "grey")
+		return (
+			<StyledRowGrey role="row" columns={columns}>
+				{children}
+			</StyledRowGrey>
 		);
 
 	return (
