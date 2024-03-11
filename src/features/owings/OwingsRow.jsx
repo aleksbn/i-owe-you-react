@@ -8,7 +8,7 @@ import Menus from "../../ui/Menus";
 import { HiEye, HiMiniBanknotes, HiTrash } from "react-icons/hi2";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useNavigate } from "react-router-dom";
-import ConfirmRepayment from "../../ui/ConfirmRepayment";
+import ConfirmRepayment from "../payments/ConfirmRepayment";
 import { useDeleteOwing } from "./useDeleteOwing";
 
 const StyledNickname = styled.div`
@@ -43,21 +43,20 @@ const StyledStatus = styled(StyledAmount)`
 
 const StyledDirection = styled(StyledAmount)``;
 
-// details
-// repay
-// delete
-
 function OwingsRow({
 	owing: {
 		id: owingId,
 		movementDate,
 		amount,
-		status,
 		persons: { nickname, image },
 		payments,
 	},
 }) {
 	const navigate = useNavigate();
+	const status =
+		Math.abs(amount) === payments.reduce((acc, cur) => acc + cur.amount, 0)
+			? "repayed"
+			: "active";
 	const { isDeleting, deleteOwing } = useDeleteOwing();
 	const remainingAmount =
 		Math.abs(amount) - payments.reduce((acc, cur) => acc + cur.amount, 0);
@@ -109,8 +108,9 @@ function OwingsRow({
 				<Modal.Window name="repay">
 					<ConfirmRepayment
 						maxAmount={remainingAmount}
-						onConfirm={() => alert("You'll pay eventually, don't worry")}
+						minDate={new Date(movementDate)}
 						disabled={isDeleting}
+						owingId={owingId}
 					/>
 				</Modal.Window>
 			</Modal>

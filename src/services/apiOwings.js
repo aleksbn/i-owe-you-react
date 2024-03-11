@@ -3,7 +3,8 @@ import supabase from "./supabase";
 export async function getOwings() {
 	let query = supabase
 		.from("owings")
-		.select("*, persons(*), payments(*)", { count: "exact" });
+		.select("*, persons(*), payments(*)", { count: "exact" })
+		.order("movementDate");
 
 	const { data, error, count } = await query;
 
@@ -36,7 +37,6 @@ export async function createEditOwing(newOwing) {
 	let query = supabase.from("owings");
 
 	let owingForInsert = { ...newOwing };
-	owingForInsert.status = "active";
 	owingForInsert.amount = newOwing.owedByMe
 		? newOwing.amount
 		: -newOwing.amount;
@@ -59,13 +59,9 @@ export async function createEditOwing(newOwing) {
 		query = query.update({ ...owingForInsert }).eq("id", owingForInsert.id);
 	}
 
-	console.log(query);
-	console.log(owingForInsert);
-
 	const { data, error } = await query.select().single();
 
 	if (error) {
-		console.log(error);
 		throw new Error("Owing could not be created");
 	}
 
@@ -73,11 +69,9 @@ export async function createEditOwing(newOwing) {
 }
 
 export async function deleteOwing(id) {
-	console.log(id);
 	const { error } = await supabase.from("owings").delete().eq("id", id);
 
 	if (error) {
-		console.error(error);
 		throw new Error("Owing could not be deleted");
 	}
 }
