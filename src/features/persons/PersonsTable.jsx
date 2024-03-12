@@ -1,5 +1,6 @@
 import Empty from "../../ui/Empty";
 import Menus from "../../ui/Menus";
+import Pagination from "../../ui/Pagination";
 import Spinner from "../../ui/Spinner";
 import Table from "../../ui/Table";
 import PersonRow from "./PersonRow";
@@ -26,6 +27,9 @@ function PersonsTable() {
 					data={persons}
 					render={(person) => <PersonRow key={person.id} person={person} />}
 				></Table.Body>
+				<Table.Footer>
+					<Pagination count={count} />
+				</Table.Footer>
 			</Table>
 		</Menus>
 	);

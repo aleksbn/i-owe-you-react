@@ -1,5 +1,6 @@
 import Empty from "../../ui/Empty";
 import Menus from "../../ui/Menus";
+import Pagination from "../../ui/Pagination";
 import Spinner from "../../ui/Spinner";
 import Table from "../../ui/Table";
 import OwingsRow from "./OwingsRow";
@@ -28,6 +29,9 @@ function OwingsTable() {
 					data={owings}
 					render={(owing) => <OwingsRow key={owing.id} owing={owing} />}
 				></Table.Body>
+				<Table.Footer>
+					<Pagination count={count} />
+				</Table.Footer>
 			</Table>
 		</Menus>
 	);

@@ -78,10 +78,6 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 		console.log(errors);
 	}
 
-	function toggleOwer() {
-		setOwedByMe(!owedByMe);
-	}
-
 	if (isLoading) return <Spinner />;
 
 	return (
@@ -117,11 +113,10 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 				</FormRow>
 				<FormRow label="Owed by me">
 					<Checkbox
-						disabled={isEditSession}
 						id="owedByMe"
-						checked={owing.owedByMe}
-						onChange={toggleOwer}
-						{...register("owedByMe", {})}
+						checked={owedByMe}
+						disabled={isEditSession}
+						onChange={() => setOwedByMe((owedByMe) => !owedByMe)}
 					/>
 				</FormRow>
 				<FormRow label="Date" error={errors?.movementDate?.message}>
@@ -139,6 +134,7 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 				<FormRow label="Person owing" error={errors?.personId?.message}>
 					<Select
 						id="personId"
+						type="form"
 						disabled={isWorking || isEditSession}
 						{...register("personId", {
 							required: "This field is required",
