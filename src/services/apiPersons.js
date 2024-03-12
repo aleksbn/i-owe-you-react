@@ -1,10 +1,17 @@
+import { PAGE_SIZE } from "../utilities/constants";
 import supabase, { supabaseUrl } from "./supabase";
 
-export async function getPersons() {
+export async function getPersons({ page }) {
 	let query = supabase
 		.from("persons")
 		.select("*", { count: "exact" })
 		.order("lastName", "firstName");
+
+	if (page) {
+		const from = (+page - 1) * PAGE_SIZE;
+		const to = from + PAGE_SIZE - 1;
+		query = query.range(from, to);
+	}
 
 	const { data, error, count } = await query;
 

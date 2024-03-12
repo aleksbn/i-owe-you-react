@@ -1,12 +1,45 @@
+import { PAGE_SIZE } from "../utilities/constants";
 import supabase from "./supabase";
 
-export async function getOwings() {
+export async function getOwings({ filter, sortBy, page }) {
 	let query = supabase
 		.from("owings")
-		.select("*, persons(*), payments(*)", { count: "exact" })
-		.order("movementDate");
+		.select("*, persons(*), payments(*)", { count: "exact" });
 
-	const { data, error, count } = await query;
+	if (sortBy && sortBy.field === "movementDate") {
+		query = query.order(sortBy.field, {
+			ascending: sortBy.direction === "asc",
+		});
+	}
+
+	if (sortBy && sortBy.field === "amount") {
+		query = query.then((response) => {
+			response.data.sort((a, b) =>
+				sortBy.direction !== "asc"
+					? Math.abs(b.amount) - Math.abs(a.amount)
+					: Math.abs(a.amount) - Math.abs(b.amount)
+			);
+			return response;
+		});
+	}
+
+	let { data, error, count } = await query;
+
+	if (filter) {
+		const status = filter.value === "active";
+		data = data.filter((owing) => {
+			let total = owing.payments.reduce((acc, cur) => acc + cur.amount, 0);
+			return status === (total !== Math.abs(owing.amount));
+		});
+	}
+
+	if (page) {
+		const from = (page - 1) * PAGE_SIZE;
+		const to = from + PAGE_SIZE;
+		data = data.slice(from, to);
+	}
+
+	count = data.length;
 
 	if (error) {
 		throw new Error("Owings could not be loaded");

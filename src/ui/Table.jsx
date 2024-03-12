@@ -54,7 +54,7 @@ const StyledBody = styled.section`
 const Footer = styled.footer`
 	background-color: var(--color-grey-50);
 	display: flex;
-	justify-content: center;
+	justify-content: flex-end;
 	padding: 1.2rem;
 
 	&:not(:has(*)) {

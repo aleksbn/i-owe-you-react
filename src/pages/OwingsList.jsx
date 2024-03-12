@@ -3,6 +3,7 @@ import OwingsTable from "../features/owings/OwingsTable";
 import Button from "../ui/Button";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
+import OwingsTableOperations from "../features/owings/OwingsTableOperations";
 
 function OwingsList() {
 	const navigate = useNavigate();
@@ -11,6 +12,7 @@ function OwingsList() {
 		<>
 			<Row type="horizontal">
 				<Heading as="h1">All the owings</Heading>
+				<OwingsTableOperations />
 			</Row>
 			<Row>
 				<OwingsTable />
