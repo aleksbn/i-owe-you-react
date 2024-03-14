@@ -7,6 +7,9 @@ export function usePersons() {
 	const queryClient = useQueryClient();
 	const [searchParams] = useSearchParams();
 
+	// FILTER
+	const nickname = searchParams.get("nickname");
+
 	// PAGINATION
 	const page = !searchParams.get("page") ? 1 : searchParams.get("page");
 
@@ -15,8 +18,8 @@ export function usePersons() {
 		data: { data: persons, count } = {},
 		error,
 	} = useQuery({
-		queryKey: ["persons", page],
-		queryFn: () => getPersons({ page }),
+		queryKey: ["persons", page, nickname],
+		queryFn: () => getPersons({ page, nickname }),
 	});
 
 	// PRE-FETCHING
