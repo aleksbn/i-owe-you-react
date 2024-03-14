@@ -33,13 +33,13 @@ export async function getOwings({ filter, sortBy, page }) {
 		});
 	}
 
+	count = data.length;
+
 	if (page) {
 		const from = (page - 1) * PAGE_SIZE;
 		const to = from + PAGE_SIZE;
 		data = data.slice(from, to);
 	}
-
-	count = data.length;
 
 	if (error) {
 		throw new Error("Owings could not be loaded");

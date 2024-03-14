@@ -1,19 +1,27 @@
 import { PAGE_SIZE } from "../utilities/constants";
 import supabase, { supabaseUrl } from "./supabase";
 
-export async function getPersons({ page }) {
+export async function getPersons({ page, nickname }) {
 	let query = supabase
 		.from("persons")
 		.select("*", { count: "exact" })
 		.order("lastName", "firstName");
 
+	let { data, error, count } = await query;
+
+	if (nickname) {
+		data = data.filter((person) =>
+			person.nickname.toLowerCase().includes(nickname.toLowerCase())
+		);
+	}
+
+	count = data.length;
+
 	if (page) {
 		const from = (+page - 1) * PAGE_SIZE;
 		const to = from + PAGE_SIZE - 1;
-		query = query.range(from, to);
+		data = data.slice(from, to);
 	}
-
-	const { data, error, count } = await query;
 
 	if (error) {
 		throw new Error("People could not be loaded");

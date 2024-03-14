@@ -3,6 +3,7 @@ import PersonsTable from "../features/persons/PersonsTable";
 import Button from "../ui/Button";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
+import SearchPerson from "../features/persons/SearchPerson";
 
 function PersonsList() {
 	const navigate = useNavigate();
@@ -11,6 +12,13 @@ function PersonsList() {
 		<>
 			<Row type="horizontal">
 				<Heading as="h1">All the people</Heading>
+			</Row>
+			<Row>
+				<SearchPerson
+					type="text"
+					size="max"
+					placeholder="Search by a nickname..."
+				/>
 			</Row>
 			<Row>
 				<PersonsTable />
