@@ -12,6 +12,7 @@ import Person from "./pages/Person";
 import OwingsList from "./pages/OwingsList";
 import Owing from "./pages/Owing";
 import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -28,7 +29,13 @@ function App() {
 			<GlobalStyles />
 			<BrowserRouter>
 				<Routes>
-					<Route element={<AppLayout />}>
+					<Route
+						element={
+							<ProtectedRoute>
+								<AppLayout />
+							</ProtectedRoute>
+						}
+					>
 						<Route index element={<Navigate replace to="owings" />} />
 						<Route path="statistics" element={<Statistics />} />
 						<Route path="account" element={<Account />} />
