@@ -15,6 +15,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUpdateOwing } from "./useUpdateOwing";
 
+const user_id_key = "f74fd96d64194db88394cabc984a4b14";
+
 /* eslint-disable react/prop-types */
 function OwingDetails({ onClose, owingToUpdate = {} }) {
 	const { id: owingId, ...owing } = owingToUpdate;
@@ -31,16 +33,19 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 	const navigate = useNavigate();
 	const isRepayed = isEditSession
 		? Math.abs(owing.amount) ===
-		  owing.payments.reduce((acc, cur) => acc + cur.amount, 0)
+		  owing[`payments_${user_id_key}`].reduce((acc, cur) => acc + cur.amount, 0)
 			? true
 			: false
 		: false;
 
 	const minValueForAmount = !isEditSession
 		? 1
-		: owing.payments.reduce((acc, cur) => acc + cur.amount, 0) + 1;
+		: owing[`payments_${user_id_key}`].reduce(
+				(acc, cur) => acc + cur.amount,
+				0
+		  ) + 1;
 
-	const payments = isEditSession ? [...owing.payments] : [];
+	const payments = isEditSession ? [...owing[`payments_${user_id_key}`]] : [];
 
 	const minDate = !isEditSession
 		? new Date()
@@ -84,9 +89,9 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 		<>
 			<Heading as="h1">
 				{isEditSession
-					? `${owing.persons.firstName} ${owing.persons.lastName} ${
-							isRepayed ? ` - already repayed` : ``
-					  }`
+					? `${owing[`persons_${user_id_key}`].firstName} ${
+							owing[`persons_${user_id_key}`].lastName
+					  } ${isRepayed ? ` - already repayed` : ``}`
 					: "Add a new owing"}
 			</Heading>
 			<Form

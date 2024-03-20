@@ -1,10 +1,14 @@
 import { PAGE_SIZE } from "../utilities/constants";
 import supabase from "./supabase";
 
+const user_id_key = "f74fd96d64194db88394cabc984a4b14";
+
 export async function getOwings({ filter, sortBy, page }) {
 	let query = supabase
-		.from("owings")
-		.select("*, persons(*), payments(*)", { count: "exact" });
+		.from(`owings_${user_id_key}`)
+		.select(`*, persons_${user_id_key}(*), payments_${user_id_key}(*)`, {
+			count: "exact",
+		});
 
 	if (sortBy && sortBy.field === "movementDate") {
 		query = query.order(sortBy.field, {
@@ -28,7 +32,10 @@ export async function getOwings({ filter, sortBy, page }) {
 	if (filter) {
 		const status = filter.value === "active";
 		data = data.filter((owing) => {
-			let total = owing.payments.reduce((acc, cur) => acc + cur.amount, 0);
+			let total = owing[`payments_${user_id_key}`].reduce(
+				(acc, cur) => acc + cur.amount,
+				0
+			);
 			return status === (total !== Math.abs(owing.amount));
 		});
 	}
@@ -52,8 +59,8 @@ export async function getOwing(id) {
 	if (id === 0) return { data: null, error: null };
 
 	let query = supabase
-		.from("owings")
-		.select("*, persons(*), payments(*)")
+		.from(`owings_${user_id_key}`)
+		.select(`*, persons_${user_id_key}(*), payments_${user_id_key}(*)`)
 		.eq("id", id)
 		.single();
 
@@ -67,7 +74,7 @@ export async function getOwing(id) {
 }
 
 export async function createEditOwing(newOwing) {
-	let query = supabase.from("owings");
+	let query = supabase.from(`owings_${user_id_key}`);
 
 	let owingForInsert = { ...newOwing };
 	owingForInsert.amount = newOwing.owedByMe
@@ -102,7 +109,10 @@ export async function createEditOwing(newOwing) {
 }
 
 export async function deleteOwing(id) {
-	const { error } = await supabase.from("owings").delete().eq("id", id);
+	const { error } = await supabase
+		.from(`owings_${user_id_key}`)
+		.delete()
+		.eq("id", id);
 
 	if (error) {
 		throw new Error("Owing could not be deleted");
