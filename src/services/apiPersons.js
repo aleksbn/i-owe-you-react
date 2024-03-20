@@ -3,7 +3,7 @@ import supabase, { supabaseUrl } from "./supabase";
 
 export async function getPersons({ page, nickname }) {
 	let query = supabase
-		.from("persons")
+		.from(`persons_${"f74fd96d64194db88394cabc984a4b14"}`)
 		.select("*", { count: "exact" })
 		.order("lastName", "firstName");
 
@@ -33,7 +33,7 @@ export async function getPersons({ page, nickname }) {
 export async function getPerson(id) {
 	if (id === 0) return { data: null, error: null };
 	const { data, error } = await supabase
-		.from("persons")
+		.from(`persons_${"f74fd96d64194db88394cabc984a4b14"}`)
 		.select("*")
 		.eq("id", id)
 		.single();
@@ -52,7 +52,7 @@ export async function createEditPerson(newPerson) {
 		? newPerson.image
 		: `${supabaseUrl}/storage/v1/object/public/personImages/${imageName}`;
 
-	let query = supabase.from("persons");
+	let query = supabase.from(`persons_${"f74fd96d64194db88394cabc984a4b14"}`);
 
 	// CREATE
 	if (!newPerson.id) {
@@ -81,7 +81,10 @@ export async function createEditPerson(newPerson) {
 		.upload(imageName, newPerson.image);
 
 	if (storageError) {
-		await supabase.from("persons").delete().eq("id", data.id);
+		await supabase
+			.from(`persons_${"f74fd96d64194db88394cabc984a4b14"}`)
+			.delete()
+			.eq("id", data.id);
 		throw new Error(
 			"Person image could not be uploaded. All changes are reverted."
 		);
@@ -91,7 +94,10 @@ export async function createEditPerson(newPerson) {
 }
 
 export async function deletePerson(id) {
-	const { error } = await supabase.from("persons").delete().eq("id", id);
+	const { error } = await supabase
+		.from(`persons_${"f74fd96d64194db88394cabc984a4b14"}`)
+		.delete()
+		.eq("id", id);
 
 	if (error) {
 		console.error(error);

@@ -13,6 +13,7 @@ import OwingsList from "./pages/OwingsList";
 import Owing from "./pages/Owing";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import Register from "./pages/Register";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -45,6 +46,7 @@ function App() {
 						<Route path="owings/:owingId" element={<Owing />} />
 					</Route>
 					<Route path="login" element={<Login />} />
+					<Route path="register" element={<Register />} />
 					<Route path="*" element={<PageNotFound />} />
 				</Routes>
 			</BrowserRouter>

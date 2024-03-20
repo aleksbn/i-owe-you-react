@@ -15,6 +15,8 @@ const StyledButtonRow = styled.div`
 	display: block;
 `;
 
+const user_id_key = "f74fd96d64194db88394cabc984a4b14";
+
 function Owing() {
 	const { owingId } = useParams();
 	const navigate = useNavigate();
@@ -24,7 +26,10 @@ function Owing() {
 	const isRepayed =
 		!isLoading && owing !== null
 			? Math.abs(owing.amount) ===
-			  owing.payments.reduce((acc, cur) => acc + cur.amount, 0)
+			  owing[`payments_${user_id_key}`].reduce(
+					(acc, cur) => acc + cur.amount,
+					0
+			  )
 			: false;
 
 	function handleClose() {
@@ -41,7 +46,7 @@ function Owing() {
 
 	const remainingAmount =
 		Math.abs(owing.amount) -
-		owing.payments.reduce((acc, cur) => acc + cur.amount, 0);
+		owing[`payments_${user_id_key}`].reduce((acc, cur) => acc + cur.amount, 0);
 
 	return (
 		<>

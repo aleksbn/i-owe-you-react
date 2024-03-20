@@ -1,23 +1,13 @@
-import styled from "styled-components";
 import LoginForm from "../features/authentication/LoginForm";
 import Heading from "../ui/Heading";
-
-const LoginLayout = styled.div`
-	min-height: 100vh;
-	display: grid;
-	grid-template-columns: 48rem;
-	align-content: center;
-	justify-content: center;
-	gap: 3.2rem;
-	background-color: var(--color-grey-50);
-`;
+import { LoginRegisterLayout } from "../ui/LoginRegisterLayout";
 
 function Login() {
 	return (
-		<LoginLayout>
+		<LoginRegisterLayout>
 			<Heading as="h4">Log in into your account</Heading>
 			<LoginForm />
-		</LoginLayout>
+		</LoginRegisterLayout>
 	);
 }
 

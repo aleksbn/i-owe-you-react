@@ -4,7 +4,7 @@ export async function getPayments({ owingId }) {
 	if (owingId === "0") return { data: null, error: null, count: 0 };
 
 	let query = supabase
-		.from("payments")
+		.from(`payments_${"f74fd96d64194db88394cabc984a4b14"}`)
 		.select("*", { count: "exact" })
 		.eq("owingId", +owingId)
 		.order("dateOfPayment");
@@ -19,7 +19,7 @@ export async function getPayments({ owingId }) {
 }
 
 export async function createPayment(newPayment) {
-	let query = supabase.from("payments");
+	let query = supabase.from(`payments_${"f74fd96d64194db88394cabc984a4b14"}`);
 	query = query.insert([{ ...newPayment }]);
 	const { data, error } = await query.select().single();
 
@@ -31,7 +31,10 @@ export async function createPayment(newPayment) {
 }
 
 export async function deletePayment(id) {
-	const { error } = await supabase.from("payments").delete().eq("id", id);
+	const { error } = await supabase
+		.from(`payments_${"f74fd96d64194db88394cabc984a4b14"}`)
+		.delete()
+		.eq("id", id);
 
 	if (error) {
 		throw new Error("Owing could not be deleted");
