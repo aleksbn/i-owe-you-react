@@ -7,9 +7,11 @@ import Input from "../../ui/Input";
 import FileInput from "../../ui/FileInput";
 import Button from "../../ui/Button";
 import { useUpdatePerson } from "./useUpdatePerson";
+import { useUserData } from "../../context/UserDataProvider";
 
 /* eslint-disable react/prop-types */
 function PersonDetails({ onClose, personToUpdate = {} }) {
+	const { userData } = useUserData();
 	const { id: personId, ...person } = personToUpdate;
 	const isEditSession = Boolean(personId);
 	const { register, handleSubmit, reset, formState } = useForm({
@@ -24,7 +26,7 @@ function PersonDetails({ onClose, personToUpdate = {} }) {
 		const image = typeof data.image === "string" ? data.image : data.image[0];
 		if (!isEditSession) {
 			createPerson(
-				{ ...data, image },
+				{ newPerson: { ...data, image }, userData },
 				{
 					onSuccess: () => {
 						reset();
@@ -34,7 +36,7 @@ function PersonDetails({ onClose, personToUpdate = {} }) {
 			);
 		} else {
 			updatePerson(
-				{ ...data, image, id: personId },
+				{ newPerson: { ...data, image, id: personId }, userData },
 				{
 					onSuccess: () => {
 						reset();

@@ -9,27 +9,27 @@ import Button from "../ui/Button";
 import ConfirmRepayment from "../features/payments/ConfirmRepayment";
 import Modal from "../ui/Modal";
 import styled from "styled-components";
+import { useUserData } from "../context/UserDataProvider";
 
 const StyledButtonRow = styled.div`
 	padding: 0.6rem;
 	display: block;
 `;
 
-const user_id_key = "f74fd96d64194db88394cabc984a4b14";
-
 function Owing() {
 	const { owingId } = useParams();
 	const navigate = useNavigate();
+	const { userData } = useUserData();
 
-	const { isLoading, owing, error } = useOwing(owingId !== "new" ? owingId : 0);
+	const { isLoading, owing, error } = useOwing(
+		owingId !== "new" ? owingId : 0,
+		userData
+	);
 
 	const isRepayed =
 		!isLoading && owing !== null
 			? Math.abs(owing.amount) ===
-			  owing[`payments_${user_id_key}`].reduce(
-					(acc, cur) => acc + cur.amount,
-					0
-			  )
+			  owing[`payments_${userData}`].reduce((acc, cur) => acc + cur.amount, 0)
 			: false;
 
 	function handleClose() {
@@ -39,14 +39,14 @@ function Owing() {
 	if (isLoading) return <Spinner />;
 
 	if (!isLoading && owingId === "new")
-		return <OwingDetails onClose={handleClose} />;
+		return <OwingDetails onClose={handleClose} userData={userData} />;
 
 	if (!isLoading && owingId !== "new" && error)
 		return <Empty resourceName="owing under that ID" />;
 
 	const remainingAmount =
 		Math.abs(owing.amount) -
-		owing[`payments_${user_id_key}`].reduce((acc, cur) => acc + cur.amount, 0);
+		owing[`payments_${userData}`].reduce((acc, cur) => acc + cur.amount, 0);
 
 	return (
 		<>
@@ -57,9 +57,10 @@ function Owing() {
 					amount: Math.abs(owing.amount),
 				}}
 				onClose={handleClose}
+				userData={userData}
 			/>
-
 			<PaymentsTable owingId={owingId} />
+
 			<StyledButtonRow>
 				<Modal>
 					<Modal.Open opens="repay">

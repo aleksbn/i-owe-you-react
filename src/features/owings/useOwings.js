@@ -2,8 +2,10 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getOwings } from "../../services/apiOwings";
 import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../../utilities/constants";
+import { useUserData } from "../../context/UserDataProvider";
 
 export function useOwings() {
+	const { userData } = useUserData();
 	const queryClient = useQueryClient();
 	const [searchParams] = useSearchParams();
 
@@ -29,7 +31,7 @@ export function useOwings() {
 		error,
 	} = useQuery({
 		queryKey: ["owings", filter, sortBy, page],
-		queryFn: () => getOwings({ filter, sortBy, page }),
+		queryFn: () => getOwings({ filter, sortBy, page, userData }),
 	});
 
 	// PRE-FETCHING

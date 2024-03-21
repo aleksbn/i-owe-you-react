@@ -43,15 +43,12 @@ const StyledStatus = styled(StyledAmount)`
 
 const StyledDirection = styled(StyledAmount)``;
 
-const user_id_key = "f74fd96d64194db88394cabc984a4b14";
-
-function OwingsRow({ owing }) {
+function OwingsRow({ owing, userData }) {
 	const navigate = useNavigate();
-
 	const { id: owingId, movementDate, amount } = owing;
-	const nickname = owing[`persons_${user_id_key}`].nickname;
-	const image = owing[`persons_${user_id_key}`].image;
-	const payments = owing[`payments_${user_id_key}`];
+	const nickname = owing[`persons_${userData}`].nickname;
+	const image = owing[`persons_${userData}`].image;
+	const payments = owing[`payments_${userData}`];
 	const status =
 		Math.abs(amount) === payments.reduce((acc, cur) => acc + cur.amount, 0)
 			? "repayed"
@@ -100,7 +97,7 @@ function OwingsRow({ owing }) {
 					<ConfirmDelete
 						resourceName="owing"
 						disabled={isDeleting}
-						onConfirm={() => deleteOwing(owingId)}
+						onConfirm={() => deleteOwing({ owingId, userData })}
 						extraMessage="If you delete this owing, you'll also delete all payments connected to it."
 					/>
 				</Modal.Window>

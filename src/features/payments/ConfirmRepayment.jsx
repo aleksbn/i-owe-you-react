@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import Input from "../../ui/Input";
 import { format } from "date-fns";
 import { useCreatePayment } from "./useCreatePayment";
+import { useUserData } from "../../context/UserDataProvider";
 
 const StyledConfirmRepay = styled.div`
 	width: 100%;
@@ -39,13 +40,14 @@ const StyledConfirmRepayRow = styled.div`
 `;
 
 function ConfirmRepayment({ maxAmount, minDate, disabled, onClose, owingId }) {
+	const { userData } = useUserData();
 	const [amount, setAmount] = useState(Math.round(maxAmount / 2));
 	const { register, handleSubmit } = useForm();
 	const { isCreating, createPayment } = useCreatePayment();
 
 	function onSubmit(data) {
 		createPayment(
-			{ ...data, owingId },
+			{ newPayment: { ...data, owingId }, userData },
 			{
 				onSuccess: () => {
 					onClose();

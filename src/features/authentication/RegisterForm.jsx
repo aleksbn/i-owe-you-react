@@ -6,9 +6,11 @@ import { useRegister } from "./useRegister";
 import SpinnerMini from "../../ui/SpinnerMini";
 import Input from "../../ui/Input";
 import { useForm } from "react-hook-form";
+import { useUserData } from "../../context/UserDataProvider";
 
 function RegisterForm() {
-	const { register: registerUser, isRegistering } = useRegister();
+	const { setUserData } = useUserData();
+	const { register: registerUser, isRegistering } = useRegister(setUserData);
 	const { register, handleSubmit, formState, getValues } = useForm();
 	const { errors } = formState;
 
