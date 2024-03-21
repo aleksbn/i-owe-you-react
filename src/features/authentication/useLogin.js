@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { login as loginApi } from "../../services/apiAuth";
 import toast from "react-hot-toast";
 
-export function useLogin() {
+export function useLogin(setUserData) {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
@@ -11,9 +11,11 @@ export function useLogin() {
 		mutationFn: ({ email, password }) => loginApi({ email, password }),
 		onSuccess: (user) => {
 			queryClient.setQueryData("user", user);
+			setUserData(user.user.id.split("-").join(""));
 			navigate("/statistics");
 		},
-		onError: () => {
+		onError: (error) => {
+			console.log(error);
 			toast.error("Provided email or password are incorrect");
 		},
 	});

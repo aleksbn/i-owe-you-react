@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeletePerson } from "./useDeletePerson";
+import { useUserData } from "../../context/UserDataProvider";
 
 const FullName = styled.div`
 	font-size: 2.4rem;
@@ -40,6 +41,7 @@ const Img = styled.img`
 function PersonRow({
 	person: { id: personId, firstName, lastName, nickname, image, phoneNumber },
 }) {
+	const { userData } = useUserData();
 	const navigate = useNavigate();
 	const { isDeleting, deletePerson } = useDeletePerson();
 
@@ -70,7 +72,7 @@ function PersonRow({
 					<ConfirmDelete
 						resourceName="person"
 						disabled={isDeleting}
-						onConfirm={() => deletePerson(personId)}
+						onConfirm={() => deletePerson({ id: personId, userData })}
 						extraMessage="If you delete this person, you're also deleting all owings connected to this person."
 					/>
 				</Modal.Window>

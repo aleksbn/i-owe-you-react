@@ -1,12 +1,10 @@
 import { PAGE_SIZE } from "../utilities/constants";
 import supabase from "./supabase";
 
-const user_id_key = "f74fd96d64194db88394cabc984a4b14";
-
-export async function getOwings({ filter, sortBy, page }) {
+export async function getOwings({ filter, sortBy, page, userData }) {
 	let query = supabase
-		.from(`owings_${user_id_key}`)
-		.select(`*, persons_${user_id_key}(*), payments_${user_id_key}(*)`, {
+		.from(`owings_${userData}`)
+		.select(`*, persons_${userData}(*), payments_${userData}(*)`, {
 			count: "exact",
 		});
 
@@ -32,7 +30,7 @@ export async function getOwings({ filter, sortBy, page }) {
 	if (filter) {
 		const status = filter.value === "active";
 		data = data.filter((owing) => {
-			let total = owing[`payments_${user_id_key}`].reduce(
+			let total = owing[`payments_${userData}`].reduce(
 				(acc, cur) => acc + cur.amount,
 				0
 			);
@@ -55,12 +53,12 @@ export async function getOwings({ filter, sortBy, page }) {
 	return { data, error, count };
 }
 
-export async function getOwing(id) {
+export async function getOwing({ id, userData }) {
 	if (id === 0) return { data: null, error: null };
 
 	let query = supabase
-		.from(`owings_${user_id_key}`)
-		.select(`*, persons_${user_id_key}(*), payments_${user_id_key}(*)`)
+		.from(`owings_${userData}`)
+		.select(`*, persons_${userData}(*), payments_${userData}(*)`)
 		.eq("id", id)
 		.single();
 
@@ -73,8 +71,8 @@ export async function getOwing(id) {
 	return { data, error };
 }
 
-export async function createEditOwing(newOwing) {
-	let query = supabase.from(`owings_${user_id_key}`);
+export async function createEditOwing({ newOwing, userData }) {
+	let query = supabase.from(`owings_${userData}`);
 
 	let owingForInsert = { ...newOwing };
 	owingForInsert.amount = newOwing.owedByMe
@@ -82,8 +80,8 @@ export async function createEditOwing(newOwing) {
 		: -newOwing.amount;
 	owingForInsert.personId = +owingForInsert.personId;
 	delete owingForInsert.owedByMe;
-	delete owingForInsert.payments;
-	delete owingForInsert.persons;
+	delete owingForInsert[`payments_${userData}`];
+	delete owingForInsert[`persons_${userData}`];
 
 	// CREATE
 	if (!owingForInsert.id) {
@@ -108,11 +106,11 @@ export async function createEditOwing(newOwing) {
 	return { data, error };
 }
 
-export async function deleteOwing(id) {
+export async function deleteOwing({ owingId, userData }) {
 	const { error } = await supabase
-		.from(`owings_${user_id_key}`)
+		.from(`owings_${userData}`)
 		.delete()
-		.eq("id", id);
+		.eq("id", owingId);
 
 	if (error) {
 		throw new Error("Owing could not be deleted");

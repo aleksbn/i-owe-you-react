@@ -1,3 +1,4 @@
+import { useUserData } from "../../context/UserDataProvider";
 import Empty from "../../ui/Empty";
 import Menus from "../../ui/Menus";
 import Pagination from "../../ui/Pagination";
@@ -7,6 +8,7 @@ import OwingsRow from "./OwingsRow";
 import { useOwings } from "./useOwings";
 
 function OwingsTable() {
+	const { userData } = useUserData();
 	const { isLoading, owings, count } = useOwings();
 
 	if (isLoading) return <Spinner />;
@@ -27,7 +29,9 @@ function OwingsTable() {
 				</Table.Header>
 				<Table.Body
 					data={owings}
-					render={(owing) => <OwingsRow key={owing.id} owing={owing} />}
+					render={(owing) => (
+						<OwingsRow key={owing.id} owing={owing} userData={userData} />
+					)}
 				></Table.Body>
 				<Table.Footer>
 					<Pagination count={count} />

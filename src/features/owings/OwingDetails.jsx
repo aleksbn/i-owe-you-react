@@ -14,11 +14,11 @@ import Checkbox from "../../ui/Checkbox";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUpdateOwing } from "./useUpdateOwing";
-
-const user_id_key = "f74fd96d64194db88394cabc984a4b14";
+import { useUserData } from "../../context/UserDataProvider";
 
 /* eslint-disable react/prop-types */
 function OwingDetails({ onClose, owingToUpdate = {} }) {
+	const { userData } = useUserData();
 	const { id: owingId, ...owing } = owingToUpdate;
 	const isEditSession = Boolean(owingId);
 	const { register, handleSubmit, formState } = useForm({
@@ -33,19 +33,17 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 	const navigate = useNavigate();
 	const isRepayed = isEditSession
 		? Math.abs(owing.amount) ===
-		  owing[`payments_${user_id_key}`].reduce((acc, cur) => acc + cur.amount, 0)
+		  owing[`payments_${userData}`].reduce((acc, cur) => acc + cur.amount, 0)
 			? true
 			: false
 		: false;
 
 	const minValueForAmount = !isEditSession
 		? 1
-		: owing[`payments_${user_id_key}`].reduce(
-				(acc, cur) => acc + cur.amount,
-				0
-		  ) + 1;
+		: owing[`payments_${userData}`].reduce((acc, cur) => acc + cur.amount, 0) +
+		  1;
 
-	const payments = isEditSession ? [...owing[`payments_${user_id_key}`]] : [];
+	const payments = isEditSession ? [...owing[`payments_${userData}`]] : [];
 
 	const minDate = !isEditSession
 		? new Date()
@@ -60,7 +58,7 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 	function onSubmit(data) {
 		if (!isEditSession) {
 			createOwing(
-				{ ...data, owedByMe },
+				{ newOwing: { ...data, owedByMe }, userData },
 				{
 					onSuccess: () => {
 						navigate("/owings");
@@ -69,7 +67,7 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 			);
 		} else {
 			updateOwing(
-				{ ...data, id: owingId },
+				{ newOwing: { ...data, id: owingId }, userData },
 				{
 					onSuccess: () => {
 						navigate("/owings");
@@ -89,8 +87,8 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 		<>
 			<Heading as="h1">
 				{isEditSession
-					? `${owing[`persons_${user_id_key}`].firstName} ${
-							owing[`persons_${user_id_key}`].lastName
+					? `${owing[`persons_${userData}`].firstName} ${
+							owing[`persons_${userData}`].lastName
 					  } ${isRepayed ? ` - already repayed` : ``}`
 					: "Add a new owing"}
 			</Heading>

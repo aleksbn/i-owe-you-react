@@ -19,10 +19,26 @@ export async function signup({ fullName, email, password }) {
 		return { data: null, error };
 	}
 
-	const user = data.user;
+	const table_id = data.user.id.split("-").join("");
+
+	const { error: firstTableError } = await supabase.rpc(
+		"create_persons_table",
+		{ table_id }
+	);
+	if (firstTableError) console.log(firstTableError);
+	const { error: secondTableError } = await supabase.rpc(
+		"create_owings_table",
+		{ table_id }
+	);
+	if (secondTableError) console.log(secondTableError);
+	const { error: thirdTableError } = await supabase.rpc(
+		"create_payments_table",
+		{ table_id }
+	);
+	if (thirdTableError) console.log(thirdTableError);
 
 	// Return the user data and any errors
-	return { data: user, error: null };
+	return { data: data.user, error: null };
 }
 
 // LOGIN

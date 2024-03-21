@@ -9,6 +9,7 @@ import Menus from "../../ui/Menus";
 import { HiTrash } from "react-icons/hi2";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeletePayment } from "./useDeletePayment";
+import { useUserData } from "../../context/UserDataProvider";
 
 const StyledDate = styled.div`
 	font-family: "Sono";
@@ -24,6 +25,7 @@ function PaymentRow({
 	payment: { id: paymentId, amount, dateOfPayment },
 	row,
 }) {
+	const { userData } = useUserData();
 	const { isDeleting, deletePayment } = useDeletePayment();
 	const color = row % 2 !== 0 ? "grey" : "";
 
@@ -46,7 +48,7 @@ function PaymentRow({
 					<ConfirmDelete
 						disabled={isDeleting}
 						resourceName="payment"
-						onConfirm={() => deletePayment(paymentId)}
+						onConfirm={() => deletePayment({ id: paymentId, userData })}
 					/>
 				</Modal.Window>
 			</Modal>
