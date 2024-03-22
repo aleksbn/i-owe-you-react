@@ -19,7 +19,7 @@ export async function signup({ fullName, email, password }) {
 		return { data: null, error };
 	}
 
-	const table_id = data.user.id.split("-").join("");
+	const table_id = `${data.user.id.split("-").join("")}`;
 
 	const { error: firstTableError } = await supabase.rpc(
 		"create_persons_table",

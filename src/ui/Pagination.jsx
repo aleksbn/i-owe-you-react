@@ -88,11 +88,11 @@ function Pagination({ count }) {
 					of <span>{count}</span> results
 				</P>
 				<Buttons>
-					<PaginationButton>
-						<HiChevronLeft onClick={previousPage} />
+					<PaginationButton onClick={previousPage}>
+						<HiChevronLeft />
 					</PaginationButton>
-					<PaginationButton>
-						<HiChevronRight onClick={nextPage} />
+					<PaginationButton onClick={nextPage}>
+						<HiChevronRight />
 					</PaginationButton>
 				</Buttons>
 			</StyledPagination>

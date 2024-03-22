@@ -30,21 +30,21 @@ export function useOwings() {
 		data: { data: owings, count } = {},
 		error,
 	} = useQuery({
-		queryKey: ["owings", filter, sortBy, page],
+		queryKey: ["owings", filter, sortBy, +page],
 		queryFn: () => getOwings({ filter, sortBy, page, userData }),
 	});
 
 	// PRE-FETCHING
 	if (page < Math.ceil(count / PAGE_SIZE)) {
 		queryClient.prefetchQuery({
-			queryKey: ["owings", filter, sortBy, page + 1],
-			queryFn: () => getOwings({ filter, sortBy, page: page + 1 }),
+			queryKey: ["owings", filter, sortBy, +page + 1],
+			queryFn: () => getOwings({ filter, sortBy, page: +page + 1, userData }),
 		});
 	}
 	if (page > 1) {
 		queryClient.prefetchQuery({
-			queryKey: ["owings", filter, sortBy, page - 1],
-			queryFn: () => getOwings({ filter, sortBy, page: page - 1 }),
+			queryKey: ["owings", filter, sortBy, +page - 1],
+			queryFn: () => getOwings({ filter, sortBy, page: +page - 1, userData }),
 		});
 	}
 

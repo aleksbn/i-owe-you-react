@@ -27,7 +27,7 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 	const { errors } = formState;
 	const { isCreating, createOwing } = useCreateOwing();
 	const { isUpdating, updateOwing } = useUpdateOwing();
-	const { isLoading, persons } = usePersons();
+	const { isLoading, persons } = usePersons("all");
 	const isWorking = isCreating || isLoading || isUpdating;
 	const [owedByMe, setOwedByMe] = useState(owing.owedByMe || false);
 	const navigate = useNavigate();
@@ -134,7 +134,7 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 						})}
 					/>
 				</FormRow>
-				<FormRow label="Person owing" error={errors?.personId?.message}>
+				<FormRow label="Person" error={errors?.personId?.message}>
 					<Select
 						id="personId"
 						type="form"
@@ -145,7 +145,9 @@ function OwingDetails({ onClose, owingToUpdate = {} }) {
 					>
 						{persons.map((person) => (
 							<option key={person.id} value={person.id}>
-								{person.nickname}
+								{isEditSession
+									? person.nickname
+									: `${person.firstName} ${person.lastName} - ${person.nickname}`}
 							</option>
 						))}
 					</Select>
