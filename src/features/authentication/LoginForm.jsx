@@ -10,8 +10,8 @@ import { useUserData } from "../../context/UserDataProvider";
 
 function LoginForm() {
 	const navigate = useNavigate();
-	const [email, setEmail] = useState("test@test.net");
-	const [password, setPassword] = useState("Test1234");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
 	const { setUserData } = useUserData();
 	const { login, isLoggingIn } = useLogin(setUserData);
