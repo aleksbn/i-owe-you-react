@@ -7,11 +7,11 @@ function Account() {
 	return (
 		<>
 			<Heading as="h1">Update your account</Heading>
-			<Row>
+			<Row type="vertical">
 				<Heading as="h3">Update user data</Heading>
 				<UpdateUserData />
 			</Row>
-			<Row>
+			<Row type="vertical">
 				<Heading as="h3">Update your password</Heading>
 				<UpdateUserPassword />
 			</Row>

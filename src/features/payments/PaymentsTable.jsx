@@ -6,15 +6,13 @@ import Spinner from "../../ui/Spinner";
 import Table from "../../ui/Table";
 import { usePayments } from "./usePayments";
 import PaymentRow from "./PaymentRow";
-import { useUserData } from "../../context/UserDataProvider";
 
 const StyledPaymentsTable = styled.div`
 	width: 50%;
 `;
 
 function PaymentsTable({ owingId }) {
-	const { userData } = useUserData();
-	const { isLoading, payments, count } = usePayments({ userData, owingId });
+	const { isLoading, payments, count } = usePayments(owingId);
 
 	if (isLoading) return <Spinner />;
 
