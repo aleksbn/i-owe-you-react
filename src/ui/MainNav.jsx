@@ -65,9 +65,9 @@ function MainNav() {
 					</StyledNavLink>
 				</li>
 				<li>
-					<StyledNavLink to="statistics">
+					<StyledNavLink to="dashboard">
 						<HiOutlinePresentationChartLine />
-						<span>Statistics</span>
+						<span>Dashboard</span>
 					</StyledNavLink>
 				</li>
 			</NavList>

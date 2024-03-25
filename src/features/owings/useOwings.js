@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../../utilities/constants";
 import { useUserData } from "../../context/UserDataProvider";
 
-export function useOwings() {
+export function useOwings(total = null) {
 	const { userData } = useUserData();
 	const queryClient = useQueryClient();
 	const [searchParams] = useSearchParams();
@@ -22,7 +22,11 @@ export function useOwings() {
 	const sortBy = { field, direction };
 
 	// PAGINATION
-	const page = !searchParams.get("page") ? 1 : searchParams.get("page");
+	const page = !searchParams.get("page")
+		? !total
+			? 1
+			: 0
+		: searchParams.get("page");
 
 	// QUERY
 	const {
