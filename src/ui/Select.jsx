@@ -16,8 +16,10 @@ const Select = styled.select`
 	font-size: 1.6rem;
 	border-radius: var(--border-radius-sm);
 	text-align: center;
+	color: var(--color-grey-800);
+	background-color: var(--color-grey-50);
 
-	${(props) => types[props.type]}
+	${(props) => types[props.type]};
 `;
 
 export default Select;

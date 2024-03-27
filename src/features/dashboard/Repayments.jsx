@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import Spinner from "../../ui/Spinner";
 import { useOwings } from "../owings/useOwings";
 import { usePayments } from "../payments/usePayments";
-import LoansLineChart from "./LoansLineChart";
+import LineChart from "./LineChart";
 
 function LoansToMe() {
 	const { owings, isLoading: isLoadingOwings } = useOwings("all");
@@ -11,18 +11,24 @@ function LoansToMe() {
 
 	if (isLoadingOwings || isLoadingPayments) return <Spinner />;
 
-	const owingsToSend = owings.filter((owing) => owing.amount > 0);
-	const paymentsToSend = payments.filter((payment) =>
-		owingsToSend.some((owing) => owing.id === payment.owingId)
+	const owingsGiven = owings.filter((owing) => owing.amount < 0);
+	const owingsReceived = owings.filter((owing) => owing.amount > 0);
+	const paymentsGiven = payments.filter((payment) =>
+		owingsGiven.some((owing) => owing.id === payment.owingId)
 	);
+	const paymentsReceived = payments.filter((payment) =>
+		owingsReceived.some((owing) => owing.id === payment.owingId)
+	);
+
 	const numDays = searchParams.get("last") ? +searchParams.get("last") : 7;
 
 	return (
-		<LoansLineChart
-			owings={owingsToSend}
-			payments={paymentsToSend}
+		<LineChart
+			mainLabel="Payments"
+			dataSet1={{ set: paymentsReceived, dateForReducing: "dateOfPayment" }}
+			dataSet2={{ set: paymentsGiven, dateForReducing: "dateOfPayment" }}
 			numDays={numDays}
-			label1="I loaned in"
+			label1="I got a payment"
 			label2="I repayed"
 		/>
 	);

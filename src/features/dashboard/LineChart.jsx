@@ -13,6 +13,7 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
+import { useDarkMode } from "../../context/DarkModeProvider";
 
 const StyledSalesChart = styled(DashboardBox)`
 	grid-column: 1 / -1;
@@ -23,7 +24,15 @@ const StyledSalesChart = styled(DashboardBox)`
 	}
 `;
 
-function LoansLineChart({ owings, payments, label1, label2, numDays = 30 }) {
+function LineChart({
+	mainLabel,
+	dataSet1,
+	dataSet2,
+	label1,
+	label2,
+	numDays = 30,
+}) {
+	const { isDarkMode } = useDarkMode();
 	const allDates = eachDayOfInterval({
 		start: subDays(new Date(), numDays),
 		end: new Date(),
@@ -32,26 +41,29 @@ function LoansLineChart({ owings, payments, label1, label2, numDays = 30 }) {
 	const data = allDates.map((date) => {
 		return {
 			label: format(date, "MMM dd"),
-			owings: owings
-				.filter((owing) => isSameDay(date, new Date(owing.movementDate)))
+			dataSet1: dataSet1.set
+				.filter((el) =>
+					isSameDay(date, new Date(el[`${dataSet1.dateForReducing}`]))
+				)
 				.reduce((acc, cur) => acc + cur.amount, 0),
-			payments: payments
-				.filter((payment) => isSameDay(date, new Date(payment.dateOfPayment)))
+			dataSet2: dataSet2.set
+				.filter((el) =>
+					isSameDay(date, new Date(el[`${dataSet2.dateForReducing}`]))
+				)
 				.reduce((acc, cur) => acc + cur.amount, 0),
 		};
 	});
 
-	const isDarkMode = false;
 	const colors = isDarkMode
 		? {
-				owings: { stroke: "#4f46e5", fill: "#4f46e5" },
-				payments: { stroke: "#22c55e", fill: "#22c55e" },
+				dataSet1: { stroke: "#4f46e5", fill: "#4f46e5" },
+				dataSet2: { stroke: "#22c55e", fill: "#22c55e" },
 				text: "#e5e7eb",
 				background: "#18212f",
 		  }
 		: {
-				owings: { stroke: "#4f46e5", fill: "#c7d2fe" },
-				payments: { stroke: "#16a34a", fill: "#dcfce7" },
+				dataSet1: { stroke: "#4f46e5", fill: "#c7d2fe" },
+				dataSet2: { stroke: "#16a34a", fill: "#dcfce7" },
 				text: "#374151",
 				background: "#fff",
 		  };
@@ -59,7 +71,7 @@ function LoansLineChart({ owings, payments, label1, label2, numDays = 30 }) {
 	return (
 		<StyledSalesChart>
 			<Heading as="h2">
-				From {format(allDates.at(0), "MMM dd yyyy")} to{" "}
+				{mainLabel} - from {format(allDates.at(0), "MMM dd yyyy")} to{" "}
 				{format(allDates.at(-1), "MMM dd yyyy")}
 			</Heading>
 			<ResponsiveContainer height={300} width="100%">
@@ -77,19 +89,19 @@ function LoansLineChart({ owings, payments, label1, label2, numDays = 30 }) {
 					<CartesianGrid strokeDasharray="4" />
 					<Tooltip contentStyle={{ backgroundColor: colors.background }} />
 					<Area
-						dataKey="owings"
+						dataKey="dataSet1"
 						type="monotone"
-						stroke={colors.owings.stroke}
-						fill={colors.owings.fill}
+						stroke={colors.dataSet1.stroke}
+						fill={colors.dataSet1.fill}
 						strokeWidth={2}
 						name={label1}
 						unit={"$"}
 					/>
 					<Area
-						dataKey="payments"
+						dataKey="dataSet2"
 						type="monotone"
-						stroke={colors.payments.stroke}
-						fill={colors.payments.fill}
+						stroke={colors.dataSet2.stroke}
+						fill={colors.dataSet2.fill}
 						strokeWidth={2}
 						name={label2}
 						unit={"$"}
@@ -100,4 +112,4 @@ function LoansLineChart({ owings, payments, label1, label2, numDays = 30 }) {
 	);
 }
 
-export default LoansLineChart;
+export default LineChart;

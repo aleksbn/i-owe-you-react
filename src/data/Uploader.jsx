@@ -10,8 +10,9 @@ import generateRandomPayments from "./data-payments";
 
 const StyledSampleData = styled.div`
 	margin-top: auto;
-	background-color: #e0e7ff;
-	padding: 8px;
+	background-color: var() (--color-grey-0);
+	border: 1px solid var(--color-grey-200);
+	padding: 7px;
 	border-radius: 5px;
 	text-align: center;
 	display: flex;

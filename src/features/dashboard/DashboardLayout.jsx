@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import Stats from "./Stats";
 import TodayActivity from "./TodayActivity";
-import LoansToMe from "./LoansToMe";
-import LoansToOthers from "./LoansToOthers";
+import Repayments from "./Repayments";
+import Loans from "./Loans";
 import { useOwings } from "../owings/useOwings";
 import Spinner from "../../ui/Spinner";
-import LoansPieChart from "./LoansPieChart";
-import { usePayments } from "../payments/usePayments";
+import Payments from "./Payments";
 
 const StyledDashboardLayout = styled.div`
 	display: grid;
@@ -17,17 +16,16 @@ const StyledDashboardLayout = styled.div`
 
 function DashboardLayout() {
 	const { owings, isLoading: isLoadingOwings } = useOwings("all");
-	const { payments, isLoading: isLoadingPayments } = usePayments("all");
 
-	if (isLoadingOwings || isLoadingPayments) return <Spinner />;
+	if (isLoadingOwings) return <Spinner />;
 
 	return (
 		<StyledDashboardLayout>
 			<Stats owings={owings} />
 			<TodayActivity />
-			<LoansPieChart allOwings={owings} allPayments={payments} />
-			<LoansToMe />
-			<LoansToOthers />
+			<Payments />
+			<Loans />
+			<Repayments />
 		</StyledDashboardLayout>
 	);
 }
