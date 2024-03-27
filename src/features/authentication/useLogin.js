@@ -14,8 +14,7 @@ export function useLogin(setUserData) {
 			setUserData(user.user.id.split("-").join(""));
 			navigate("/statistics");
 		},
-		onError: (error) => {
-			console.log(error);
+		onError: () => {
 			toast.error("Provided email or password are incorrect");
 		},
 	});
