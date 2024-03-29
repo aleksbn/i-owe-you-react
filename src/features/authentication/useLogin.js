@@ -12,7 +12,7 @@ export function useLogin(setUserData) {
 		onSuccess: (user) => {
 			queryClient.setQueryData("user", user);
 			setUserData(user.user.id.split("-").join(""));
-			navigate("/statistics");
+			navigate("/welcome");
 		},
 		onError: () => {
 			toast.error("Provided email or password are incorrect");

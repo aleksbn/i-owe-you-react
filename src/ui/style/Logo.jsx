@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 // Styled component for the logo container
@@ -16,9 +17,9 @@ function Logo() {
 	const src = "/logo.png"; // Image source
 	return (
 		<StyledLogo>
-			<a href="/welcome">
+			<NavLink to="/welcome">
 				<Img src={src} alt="logo" />
-			</a>
+			</NavLink>
 		</StyledLogo>
 	);
 }

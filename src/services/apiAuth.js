@@ -20,11 +20,21 @@ export async function signup({ fullName, email, password }) {
 	}
 
 	const table_id = `${data.user.id.split("-").join("")}`;
-	await Promise.all([
-		supabase.rpc("create_persons_table", { table_id }),
-		supabase.rpc("create_owings_table", { table_id }),
-		supabase.rpc("create_payments_table", { table_id }),
-	]);
+	const { error: firstTableError } = await supabase.rpc(
+		"create_persons_table",
+		{ table_id: `${table_id}` }
+	);
+	if (firstTableError) console.log(firstTableError);
+	const { error: secondTableError } = await supabase.rpc(
+		"create_owings_table",
+		{ table_id: `${table_id}` }
+	);
+	if (secondTableError) console.log(secondTableError);
+	const { error: thirdTableError } = await supabase.rpc(
+		"create_payments_table",
+		{ table_id: `${table_id}` }
+	);
+	if (thirdTableError) console.log(thirdTableError);
 
 	// Return the user data and any errors
 	return { data: data.user, error: null };

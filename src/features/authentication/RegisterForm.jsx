@@ -20,7 +20,7 @@ function RegisterForm() {
 		registerUser(
 			{ email, fullName, password },
 			{
-				onSuccess: () => navigate("/statistics"),
+				onSuccess: () => navigate("/welcome"),
 			}
 		);
 	}
