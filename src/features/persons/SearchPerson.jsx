@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import Input from "../../ui/Input";
+import Input from "../../ui/common/Input";
 import { useSearchParams } from "react-router-dom";
 
 const sizes = {

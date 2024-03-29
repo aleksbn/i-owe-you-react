@@ -1,16 +1,16 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { useForm } from "react-hook-form";
 import { useCreateOwing } from "./useCreateOwing";
-import Heading from "../../ui/Heading";
-import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
+import Heading from "../../ui/style/Heading";
+import Form from "../../ui/form/Form";
+import FormRow from "../../ui/form/FormRow";
+import Input from "../../ui/common/Input";
 import { format } from "date-fns";
-import Select from "../../ui/Select";
+import Select from "../../ui/common/Select";
 import { usePersons } from "../persons/usePersons";
-import Button from "../../ui/Button";
-import Spinner from "../../ui/Spinner";
-import Checkbox from "../../ui/Checkbox";
+import Button from "../../ui/common/Button";
+import Spinner from "../../ui/style/Spinner";
+import Checkbox from "../../ui/common/Checkbox";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUpdateOwing } from "./useUpdateOwing";

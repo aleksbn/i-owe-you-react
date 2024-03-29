@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import Table from "../../ui/Table";
-import Menus from "../../ui/Menus";
+import Table from "../../ui/common/Table";
+import Menus from "../../ui/component/Menus";
 import { HiPencil, HiTrash } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
-import Modal from "../../ui/Modal";
-import ConfirmDelete from "../../ui/ConfirmDelete";
+import Modal from "../../ui/component/Modal";
+import ConfirmDelete from "../../ui/component/ConfirmDelete";
 import { useDeletePerson } from "./useDeletePerson";
 import { useUserData } from "../../context/UserDataProvider";
 

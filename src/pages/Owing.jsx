@@ -1,13 +1,13 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { useNavigate, useParams } from "react-router-dom";
 import { useOwing } from "../features/owings/useOwing";
-import Spinner from "../ui/Spinner";
-import Empty from "../ui/Empty";
+import Spinner from "../ui/style/Spinner";
+import Empty from "../ui/content/Empty";
 import OwingDetails from "../features/owings/OwingDetails";
 import PaymentsTable from "../features/payments/PaymentsTable";
-import Button from "../ui/Button";
+import Button from "../ui/common/Button";
 import ConfirmRepayment from "../features/payments/ConfirmRepayment";
-import Modal from "../ui/Modal";
+import Modal from "../ui/component/Modal";
 import styled from "styled-components";
 import { useUserData } from "../context/UserDataProvider";
 

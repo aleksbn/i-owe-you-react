@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import Row from "../../ui/Row";
+import Row from "../../ui/layout/Row";
 import TodayItem from "./TodayItem";
 import { useToday } from "./useToday";
-import Spinner from "../../ui/Spinner";
-import Heading from "../../ui/Heading";
+import Spinner from "../../ui/style/Spinner";
+import Heading from "../../ui/style/Heading";
 
 const StyledToday = styled.div`
 	background-color: var(--color-grey-0);

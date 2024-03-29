@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useUpdateUser } from "./useUpdateUser";
 import { useUser } from "./useUser";
-import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
-import FileInput from "../../ui/FileInput";
-import Button from "../../ui/Button";
+import Form from "../../ui/form/Form";
+import FormRow from "../../ui/form/FormRow";
+import Input from "../../ui/common/Input";
+import FileInput from "../../ui/common/FileInput";
+import Button from "../../ui/common/Button";
 
 function UpdateUserData() {
 	const { user } = useUser().user;

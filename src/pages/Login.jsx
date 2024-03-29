@@ -1,6 +1,6 @@
 import LoginForm from "../features/authentication/LoginForm";
-import Heading from "../ui/Heading";
-import { LoginRegisterLayout } from "../ui/LoginRegisterLayout";
+import Heading from "../ui/style/Heading";
+import { LoginRegisterLayout } from "../ui/component/LoginRegisterLayout";
 
 function Login() {
 	return (

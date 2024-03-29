@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import PersonsTable from "../features/persons/PersonsTable";
-import Button from "../ui/Button";
-import Heading from "../ui/Heading";
-import Row from "../ui/Row";
+import Button from "../ui/common/Button";
+import Heading from "../ui/style/Heading";
+import Row from "../ui/layout/Row";
 import SearchPerson from "../features/persons/SearchPerson";
 
 function PersonsList() {

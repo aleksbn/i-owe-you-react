@@ -1,8 +1,8 @@
-import Empty from "../../ui/Empty";
-import Menus from "../../ui/Menus";
-import Pagination from "../../ui/Pagination";
-import Spinner from "../../ui/Spinner";
-import Table from "../../ui/Table";
+import Empty from "../../ui/content/Empty";
+import Menus from "../../ui/component/Menus";
+import Pagination from "../../ui/component/Pagination";
+import Spinner from "../../ui/style/Spinner";
+import Table from "../../ui/common/Table";
 import PersonRow from "./PersonRow";
 import { usePersons } from "./usePersons";
 

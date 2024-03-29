@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import Empty from "../../ui/Empty";
-import Menus from "../../ui/Menus";
-import Spinner from "../../ui/Spinner";
-import Table from "../../ui/Table";
+import Empty from "../../ui/content/Empty";
+import Menus from "../../ui/component/Menus";
+import Spinner from "../../ui/style/Spinner";
+import Table from "../../ui/common/Table";
 import { usePayments } from "./usePayments";
 import PaymentRow from "./PaymentRow";
 

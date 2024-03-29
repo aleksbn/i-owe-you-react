@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useLogin } from "./useLogin";
-import Form from "../../ui/Form";
-import FormRowVertical from "../../ui/FormRowVertical";
-import Input from "../../ui/Input";
-import Button from "../../ui/Button";
-import SpinnerMini from "../../ui/SpinnerMini";
+import Form from "../../ui/form/Form";
+import FormRowVertical from "../../ui/form/FormRowVertical";
+import Input from "../../ui/common/Input";
+import Button from "../../ui/common/Button";
+import SpinnerMini from "../../ui/style/SpinnerMini";
 import { useNavigate } from "react-router-dom";
 import { useUserData } from "../../context/UserDataProvider";
 

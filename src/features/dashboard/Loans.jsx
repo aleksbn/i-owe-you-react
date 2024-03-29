@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import Spinner from "../../ui/Spinner";
+import Spinner from "../../ui/style/Spinner";
 import { useOwings } from "../owings/useOwings";
 import LineChart from "./LineChart";
 

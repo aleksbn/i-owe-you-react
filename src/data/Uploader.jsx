@@ -3,8 +3,8 @@ import { useUserData } from "../context/UserDataProvider";
 import supabase from "../services/supabase";
 import generateRandomPersons from "./data-persons";
 import styled from "styled-components";
-import Heading from "../ui/Heading";
-import Button from "../ui/Button";
+import Heading from "../ui/style/Heading";
+import Button from "../ui/common/Button";
 import generateRandomOwings from "./data-owings";
 import generateRandomPayments from "./data-payments";
 

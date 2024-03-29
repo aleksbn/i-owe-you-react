@@ -13,8 +13,9 @@ function Stats({ owings }) {
 			(acc, cur) => acc + cur.amount,
 			0
 		);
-		return Math.abs(owing.amount) === totalPayments;
+		return Math.abs(owing.amount) !== totalPayments;
 	});
+
 	const moneyThatIOwe = activeOwings.reduce((acc, cur) => {
 		const paymentsForOwing = cur[`payments_${userData}`].reduce(
 			(acc2, cur2) => acc2 + cur2.amount,

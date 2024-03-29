@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import Tag from "../../ui/Tag";
+import Tag from "../../ui/style/Tag";
 import { formatCurrency } from "../../utilities/helpers";
 
 const StyledTodayItem = styled.li`

@@ -1,71 +1,37 @@
 import { useSearchParams } from "react-router-dom";
-import { useDarkMode } from "../../context/DarkModeProvider";
-import Spinner from "../../ui/Spinner";
+import Spinner from "../../ui/style/Spinner";
 import { useOwings } from "../owings/useOwings";
 import { usePayments } from "../payments/usePayments";
-import PieChartBox from "./PieChartBox";
-import { fromToday } from "../../utilities/helpers";
-import { compareAsc } from "date-fns";
-
-const startDataLight = [
-	{
-		label: "Payments I received",
-		value: 0,
-		color: "#ef4444",
-	},
-	{
-		label: "Payments I gave",
-		value: 0,
-		color: "#14b8a6",
-	},
-];
-
-const startDataDark = [
-	{
-		label: "Payments I received",
-		value: 0,
-		color: "#b91c1c",
-	},
-	{
-		label: "Payments I gave",
-		value: 0,
-		color: "#16cc77",
-	},
-];
+import LineChart from "./LineChart";
 
 function Payments() {
 	const { owings, isLoading: isLoadingOwings } = useOwings("all");
 	const { payments, isLoading: isLoadingPayments } = usePayments("all");
-	const { isDarkMode } = useDarkMode();
 	const [searchParams] = useSearchParams();
-
-	const startData = isDarkMode ? startDataDark : startDataLight;
 
 	if (isLoadingOwings || isLoadingPayments) return <Spinner />;
 
+	const owingsGiven = owings.filter((owing) => owing.amount < 0);
+	const owingsReceived = owings.filter((owing) => owing.amount > 0);
+	const paymentsGiven = payments.filter((payment) =>
+		owingsGiven.some((owing) => owing.id === payment.owingId)
+	);
+	const paymentsReceived = payments.filter((payment) =>
+		owingsReceived.some((owing) => owing.id === payment.owingId)
+	);
+
 	const numDays = searchParams.get("last") ? +searchParams.get("last") : 7;
-	const startDate = fromToday(-numDays);
 
-	const myOwings = owings.filter(
-		(o) =>
-			o.amount > 0 &&
-			compareAsc(new Date(o.movementDate), new Date(startDate.split("T")[0])) >=
-				0
+	return (
+		<LineChart
+			mainLabel="Payments"
+			dataSet1={{ set: paymentsReceived, dateForReducing: "dateOfPayment" }}
+			dataSet2={{ set: paymentsGiven, dateForReducing: "dateOfPayment" }}
+			numDays={numDays}
+			label1="I repayed"
+			label2="I got a payment"
+		/>
 	);
-	const othersOwings = owings.filter(
-		(o) =>
-			o.amount < 0 &&
-			compareAsc(new Date(o.movementDate), new Date(startDate.split("T")[0])) >=
-				0
-	);
-	startData[0].value = payments
-		.filter((p) => othersOwings.some((o) => o.id === p.owingId))
-		.reduce((acc, cur) => acc + cur.amount, 0);
-	startData[1].value = payments
-		.filter((p) => myOwings.some((o) => o.id === p.owingId))
-		.reduce((acc, cur) => acc + cur.amount, 0);
-
-	return <PieChartBox data={[...startData]} heading="Payments in ($)" />;
 }
 
 export default Payments;

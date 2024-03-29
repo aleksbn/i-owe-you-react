@@ -63,7 +63,7 @@ export async function getTodayPayments({ userData }) {
 			)
 			.map(async (p) => {
 				const owing = p[`owings_${userData}`];
-				p["direction"] = owing.amount > 0 ? "tome" : "toother";
+				p["direction"] = owing.amount < 0 ? "tome" : "toother";
 				const { data: person } = await supabase
 					.from(`persons_${userData}`)
 					.select("*")

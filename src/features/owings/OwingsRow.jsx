@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import Table from "../../ui/Table";
+import Table from "../../ui/common/Table";
 import { format } from "date-fns";
 import { formatCurrency } from "../../utilities/helpers";
-import Modal from "../../ui/Modal";
-import Menus from "../../ui/Menus";
+import Modal from "../../ui/component/Modal";
+import Menus from "../../ui/component/Menus";
 import { HiEye, HiMiniBanknotes, HiTrash } from "react-icons/hi2";
-import ConfirmDelete from "../../ui/ConfirmDelete";
+import ConfirmDelete from "../../ui/component/ConfirmDelete";
 import { useNavigate } from "react-router-dom";
 import ConfirmRepayment from "../payments/ConfirmRepayment";
 import { useDeleteOwing } from "./useDeleteOwing";

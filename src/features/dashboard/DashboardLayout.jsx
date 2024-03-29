@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import Stats from "./Stats";
 import TodayActivity from "./TodayActivity";
-import Repayments from "./Repayments";
 import Loans from "./Loans";
 import { useOwings } from "../owings/useOwings";
-import Spinner from "../../ui/Spinner";
+import Spinner from "../../ui/style/Spinner";
+import PaymentsPieChart from "./PaymentsPieChart";
 import Payments from "./Payments";
 
 const StyledDashboardLayout = styled.div`
@@ -23,9 +23,9 @@ function DashboardLayout() {
 		<StyledDashboardLayout>
 			<Stats owings={owings} />
 			<TodayActivity />
-			<Payments />
+			<PaymentsPieChart />
 			<Loans />
-			<Repayments />
+			<Payments />
 		</StyledDashboardLayout>
 	);
 }

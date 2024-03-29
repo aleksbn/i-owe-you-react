@@ -2,7 +2,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import styled from "styled-components";
 import DashboardBox from "./DashboardBox";
-import Heading from "../../ui/Heading";
+import Heading from "../../ui/style/Heading";
 import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
 import {
 	Area,

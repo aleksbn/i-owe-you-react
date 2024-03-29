@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { usePerson } from "../features/persons/usePerson";
 import PersonDetails from "../features/persons/PersonDetails";
-import Spinner from "../ui/Spinner";
-import Empty from "../ui/Empty";
+import Spinner from "../ui/style/Spinner";
+import Empty from "../ui/content/Empty";
 
 function Person() {
 	const { personId } = useParams();

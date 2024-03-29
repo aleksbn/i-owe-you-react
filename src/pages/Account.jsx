@@ -1,7 +1,7 @@
 import UpdateUserData from "../features/authentication/UpdateUserData";
 import UpdateUserPassword from "../features/authentication/UpdateUserPassword";
-import Heading from "../ui/Heading";
-import Row from "../ui/Row";
+import Heading from "../ui/style/Heading";
+import Row from "../ui/layout/Row";
 
 function Account() {
 	return (

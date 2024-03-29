@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import Table from "../../ui/Table";
+import Table from "../../ui/common/Table";
 import { format } from "date-fns";
 import { formatCurrency } from "../../utilities/helpers";
-import SpinnerMini from "../../ui/SpinnerMini";
-import Modal from "../../ui/Modal";
-import Menus from "../../ui/Menus";
+import SpinnerMini from "../../ui/style/SpinnerMini";
+import Modal from "../../ui/component/Modal";
+import Menus from "../../ui/component/Menus";
 import { HiTrash } from "react-icons/hi2";
-import ConfirmDelete from "../../ui/ConfirmDelete";
+import ConfirmDelete from "../../ui/component/ConfirmDelete";
 import { useDeletePayment } from "./useDeletePayment";
 import { useUserData } from "../../context/UserDataProvider";
 

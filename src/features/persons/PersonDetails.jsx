@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import Form from "../../ui/Form";
-import Heading from "../../ui/Heading";
+import Form from "../../ui/form/Form";
+import Heading from "../../ui/style/Heading";
 import { useCreatePerson } from "./useCreatePerson";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
-import FileInput from "../../ui/FileInput";
-import Button from "../../ui/Button";
+import FormRow from "../../ui/form/FormRow";
+import Input from "../../ui/common/Input";
+import FileInput from "../../ui/common/FileInput";
+import Button from "../../ui/common/Button";
 import { useUpdatePerson } from "./useUpdatePerson";
 import { useUserData } from "../../context/UserDataProvider";
 

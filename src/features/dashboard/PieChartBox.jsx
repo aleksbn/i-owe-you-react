@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import Heading from "../../ui/Heading";
+import Heading from "../../ui/style/Heading";
 import {
 	Cell,
 	Legend,

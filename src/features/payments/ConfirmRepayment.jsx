@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import Heading from "../../ui/Heading";
-import Button from "../../ui/Button";
+import Heading from "../../ui/style/Heading";
+import Button from "../../ui/common/Button";
 import { useState } from "react";
-import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
+import Form from "../../ui/form/Form";
+import FormRow from "../../ui/form/FormRow";
 import { useForm } from "react-hook-form";
-import Input from "../../ui/Input";
+import Input from "../../ui/common/Input";
 import { format } from "date-fns";
 import { useCreatePayment } from "./useCreatePayment";
 import { useUserData } from "../../context/UserDataProvider";
