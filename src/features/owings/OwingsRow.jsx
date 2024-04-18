@@ -34,6 +34,7 @@ const Img = styled.img`
 	object-fit: fill;
 	object-position: center;
 	transform: scale(1.2);
+	border-radius: 50%;
 `;
 
 const StyledStatus = styled(StyledAmount)`

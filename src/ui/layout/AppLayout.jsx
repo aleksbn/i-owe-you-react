@@ -26,7 +26,7 @@ const StyledMain = styled.main`
 		--color-grey-50
 	); // Background color for the main content
 	padding: 4rem 4.8rem 6.4rem; // Padding for the main content area
-	overflow: scroll; // Allow scrolling if content overflows
+	overflow: auto; // Allow scrolling if content overflows
 `;
 
 // AppLayout component renders the layout of the entire application
@@ -34,12 +34,12 @@ function AppLayout() {
 	return (
 		<StyledAppLayout>
 			<Header />
-			<Sidebar />
 			<StyledMain>
 				<StyledContainer>
 					<Outlet />
 				</StyledContainer>
 			</StyledMain>
+			<Sidebar />
 		</StyledAppLayout>
 	);
 }

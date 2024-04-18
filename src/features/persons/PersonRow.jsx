@@ -36,6 +36,8 @@ const Img = styled.img`
 	object-fit: cover;
 	object-position: center;
 	transform: scale(1.35) translateX(-7px);
+	border-radius: 20%;
+	padding: .3rem;
 `;
 
 function PersonRow({
