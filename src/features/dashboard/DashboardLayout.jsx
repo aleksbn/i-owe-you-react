@@ -8,26 +8,31 @@ import PaymentsPieChart from "./PaymentsPieChart";
 import Payments from "./Payments";
 
 const StyledDashboardLayout = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	grid-template-rows: auto 34rem auto auto;
-	gap: 2.4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto 34rem auto auto;
+  gap: 2.4rem;
 `;
 
+/**
+ * Renders the layout for the dashboard.
+ *
+ * @return {JSX.Element} The rendered dashboard layout.
+ */
 function DashboardLayout() {
-	const { owings, isLoading: isLoadingOwings } = useOwings("all");
+  const { owings, isLoading: isLoadingOwings } = useOwings("all");
 
-	if (isLoadingOwings) return <Spinner />;
+  if (isLoadingOwings) return <Spinner />;
 
-	return (
-		<StyledDashboardLayout>
-			<Stats owings={owings} />
-			<TodayActivity />
-			<PaymentsPieChart />
-			<Loans />
-			<Payments />
-		</StyledDashboardLayout>
-	);
+  return (
+    <StyledDashboardLayout>
+      <Stats owings={owings} />
+      <TodayActivity />
+      <PaymentsPieChart />
+      <Loans />
+      <Payments />
+    </StyledDashboardLayout>
+  );
 }
 
 export default DashboardLayout;
