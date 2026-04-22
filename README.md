@@ -1,6 +1,6 @@
 # LEGACY DEMO PROJECT
 
-This project was buid during learning process (bacn in early 2024) and is not representing my current coding skills, but is availabe as a part of my personal development timeline.
+This project was built during learning process (back in early 2024) and is not representing my current coding skills, but is availabe as a part of my personal development timeline.
 
 # Project Name
 
